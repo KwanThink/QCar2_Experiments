@@ -1,0 +1,54 @@
+qcar2_flmpc_controller:
+  ros__parameters:
+    # Frames and topics
+    map_frame: map
+    base_frame: base_link
+    goal_topic: /goal_pose
+    joint_state_topic: qcar2_joint
+    command_topic: qcar2_motor_speed_cmd
+    reference_path_topic: /qcar2_flmpc/reference_path
+
+    # Result logging. Each completed goal run is saved as run_FLMPC_Mk1_x.
+    enable_result_logging: true
+    result_directory: /home/nvidia/Results/flmpc_Mk1
+
+    # Runtime timing and safety
+    control_period: 0.03
+    transform_timeout: 0.10
+    feedback_timeout: 0.25
+    goal_position_tolerance: 0.10
+    launch_velocity_threshold: 0.05 #m/s
+    stop_on_solver_failure: true
+
+    # Flatness-based model and input mapping
+    wheelbase: 0.25725 #m
+    epsilon: 0.001
+    Ts: 0.03 #s
+
+    # FLMPC horizon and physical constraints
+    mpc_N: 30
+    vx_min: -2.0
+    vx_max: 2.0
+    delta_min: -0.5236
+    delta_max: 0.5236
+    ax_min: -1.0
+    ax_max: 1.0
+
+    # FLMPC Cartesian-position and virtual-input weights
+    Q: [120.0, 120.0]
+    R: [15.0, 15.0]
+
+    # Flatness-based Bezier trajectory generation
+    # In auto mode, P0 comes from map -> base_link, Pend comes from /goal_pose,
+    # and intermediate waypoints are sampled from the cubic Hermite geometry.
+    trajectory_generation_mode: auto
+    number_of_waypoints: 4
+
+    # User-defined segment times. The number of values must be number_of_waypoints - 1.
+    # Example: number_of_waypoints = 4 => 3 segment times.
+    segment_times: [3.0, 3.0, 3.0]
+
+    minimum_segment_time: 1.0
+    intermediate_tangent_scale: 1.0
+    minimum_goal_distance: 0.05
+    zero_endpoint_steering: true

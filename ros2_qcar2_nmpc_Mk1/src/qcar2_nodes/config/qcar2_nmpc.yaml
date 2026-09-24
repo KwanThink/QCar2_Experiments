@@ -1,0 +1,54 @@
+qcar2_nmpc_controller:
+  ros__parameters:
+    # Frames and topics
+    map_frame: map
+    base_frame: base_link
+    goal_topic: /goal_pose
+    joint_state_topic: qcar2_joint
+    command_topic: qcar2_motor_speed_cmd
+    reference_path_topic: /qcar2_nmpc/reference_path
+
+    # Result logging. Each completed goal run is saved as run_Mk1_x.
+    enable_result_logging: true
+    result_directory: /home/nvidia/Results/nmpc_Mk1
+
+    # Runtime timing and safety
+    control_period: 0.03
+    transform_timeout: 0.10
+    feedback_timeout: 0.25
+    goal_position_tolerance: 0.10
+    goal_yaw_tolerance: 0.175
+    stop_on_solver_failure: true
+
+    # Single-track model copied from the simulation project
+    wheelbase: 0.25725 #m
+    Ts: 0.03 #s
+
+    # NMPC horizon and constraints
+    mpc_N: 30
+    vx_min: -2.0
+    vx_max: 2.0
+    delta_min: -0.5236
+    delta_max: 0.5236
+    ax_min: -1.0
+    ax_max: 1.0
+
+    # Weights kept for documentation and solver-generation consistency
+    Q:  [160.0, 160.0, 80.0, 200.0]
+    R:  [10.0, 500.0]
+    Qe: [320.0, 320.0, 160.0, 400.0]
+    
+    # Flatness-based Bezier trajectory generation
+    # In auto mode, P0 comes from map -> base_link, Pend comes from /goal_pose,
+    # and intermediate waypoints are sampled from the cubic Hermite geometry.
+    trajectory_generation_mode: auto
+    number_of_waypoints: 4
+
+    # User-defined segment times. The number of values must be number_of_waypoints - 1.
+    # Example: number_of_waypoints = 4 => 3 segment times.
+    segment_times: [2.0, 2.0, 2.0]
+
+    minimum_segment_time: 1.0
+    intermediate_tangent_scale: 1.0
+    minimum_goal_distance: 0.05
+    zero_endpoint_steering: true

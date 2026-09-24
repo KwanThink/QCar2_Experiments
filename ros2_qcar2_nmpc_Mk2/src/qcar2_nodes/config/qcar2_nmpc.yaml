@@ -1,0 +1,83 @@
+qcar2_nmpc_controller:
+  ros__parameters:
+    # Frames and topics
+    map_frame: map
+    base_frame: base_link
+    goal_topic: /goal_pose
+    joint_state_topic: qcar2_joint
+    command_topic: qcar2_motor_speed_cmd
+    reference_path_topic: /qcar2_nmpc/reference_path   # fixed preview: P0 -> ... -> PN
+    active_path_topic: /qcar2_nmpc/active_path         # active path after 2D Goal trigger: S0 -> ... -> PN
+
+    # Result logging. Each completed run is saved as:
+    #   /home/nvidia/Results/nmpc_Mk2/run_Mk2_<shape_type>_x
+    enable_result_logging: true
+    result_directory: /home/nvidia/Results/nmpc_Mk2
+    shape_type: Circle
+
+    # Runtime timing and safety
+    control_period: 0.03
+    transform_timeout: 0.10
+    feedback_timeout: 0.25
+    goal_position_tolerance: 0.10
+    goal_yaw_tolerance: 0.175
+    stop_on_solver_failure: true
+
+    # Single-track model copied from the simulation project
+    wheelbase: 0.25725 #m
+    Ts: 0.03 #s
+
+    # NMPC horizon and constraints
+    mpc_N: 30 #30
+    vx_min: -2.0
+    vx_max: 2.0
+    delta_min: -0.5236
+    delta_max: 0.5236
+    ax_min: -1.0
+    ax_max: 1.0
+
+    # Weights kept for documentation and solver-generation consistency
+    Q:  [160.0, 160.0, 80.0, 200.0]
+    R:  [10.0, 500.0]
+    Qe: [320.0, 320.0, 160.0, 400.0]
+
+    # Fixed-reference trajectory generation
+    # 2D Goal in RViz2 is only a trigger. Its x/y/yaw are not used as the final goal.
+    # Active trajectory after trigger:
+    #   S0(TF map -> base_link) -> auto Hermite waypoints -> P0 -> P1 -> ... -> PN
+
+    # Start trajectory S0 -> P0. If number_of_waypoints_start = 4:
+    #   start geometry = [S0, A1, A2, P0]
+    number_of_waypoints_start: 4
+    segment_times_start: [2.0, 2.0, 2.0]
+
+    # Fixed reference trajectory P0 -> P1 -> ... -> PN on the map.
+    # Flat list format: [x0, y0, x1, y1, ...]
+    waypoints_ref_xy: [
+      -2.1, 0.7,
+      -2.6, 0.9,
+      -3.0, 1.4,
+      -3.0, 2.0,
+      -2.6, 2.5,
+      -2.1, 2.7,
+      -1.5, 2.5,
+      -1.1, 2.0,
+      -1.1, 1.4,
+      -1.5, 0.9,
+      -2.1, 0.7
+    ]
+    
+    segment_times_ref: [
+      2.0, 2.0, 2.0, 2.0, 2.0,
+      2.0, 2.0, 2.0, 2.0, 2.0
+    ]
+
+    # Heading boundary conditions for the fixed reference.
+    # psi(S0) comes from TF; psi(P0)=theta_start; psi(PN)=theta_end.
+    theta_start: 3.12
+    theta_end: 2.9
+
+    minimum_segment_time: 1.0
+    intermediate_tangent_scale: 1.0
+    minimum_goal_distance: 0.05
+    zero_endpoint_steering: false #true
