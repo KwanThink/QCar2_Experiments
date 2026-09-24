@@ -40,6 +40,8 @@ colcon build
 source install/setup.bash
 ```
 
+> **Note:** If `colcon build` reports an error on the first attempt, run `colcon build` once again.
+
 ### 2.2 Start manual cartography
 
 ```bash
@@ -85,6 +87,10 @@ ros2 run nav2_map_server map_saver_cli -f /home/nvidia/Maps/my_map
 ```
 
 Replace `my_map` with the desired map name.
+
+### 2.6 Stop the project
+
+To stop the project, press **Ctrl + C** in the terminal tab where `qcar2_manual_cartographer_launch.py` is running.
 
 ---
 
@@ -151,6 +157,8 @@ colcon build
 source install/setup.bash
 ```
 
+> **Note:** If `colcon build` reports an error on the first attempt, run `colcon build` once again.
+
 ### 3.4 Launch NMPC
 
 ```bash
@@ -185,6 +193,10 @@ Set **Fixed Frame** to `map`, then add:
 1. Use **2D Pose Estimate** to initialize the QCar2 pose on the map.
 2. Use **2D Goal Pose** to select the desired final position and orientation.
 3. NMPC automatically generates a trajectory from the current vehicle pose to the selected goal and starts tracking it.
+
+### 3.7 Stop the project
+
+To stop the project, press **Ctrl + C** in the terminal tab where `qcar2_nmpc_bringup_launch.py` is running.
 
 ---
 
@@ -247,6 +259,8 @@ colcon build
 source install/setup.bash
 ```
 
+> **Note:** If `colcon build` reports an error on the first attempt, run `colcon build` once again.
+
 ### 4.4 Launch NMPC Mk2
 
 ```bash
@@ -285,6 +299,10 @@ Only the reference path is required. There is no need to add `/qcar2_nmpc/active
 3. Use **2D Goal Pose** to trigger the experiment.
 
 In Mk2, the position and orientation selected with **2D Goal Pose are not used as the trajectory goal**. The predefined trajectory from `qcar2_nmpc.yaml` is used instead.
+
+### 4.7 Stop the project
+
+To stop the project, press **Ctrl + C** in the terminal tab where `qcar2_nmpc_bringup_launch.py` is running.
 
 ---
 
@@ -338,6 +356,8 @@ colcon build
 source install/setup.bash
 ```
 
+> **Note:** If `colcon build` reports an error on the first attempt, run `colcon build` once again.
+
 ### 5.4 Launch FLMPC
 
 ```bash
@@ -372,6 +392,10 @@ Set **Fixed Frame** to `map`, then add:
 1. Use **2D Pose Estimate** to initialize the QCar2 pose.
 2. Use **2D Goal Pose** to select the desired final position and orientation.
 3. FLMPC generates the trajectory to the selected goal and starts tracking it.
+
+### 5.7 Stop the project
+
+To stop the project, press **Ctrl + C** in the terminal tab where `qcar2_flmpc_bringup_launch.py` is running.
 
 ---
 
@@ -426,6 +450,8 @@ colcon build
 source install/setup.bash
 ```
 
+> **Note:** If `colcon build` reports an error on the first attempt, run `colcon build` once again.
+
 ### 6.4 Launch FLMPC Mk2
 
 ```bash
@@ -464,6 +490,10 @@ Only the reference path is required. There is no need to add `/qcar2_flmpc/activ
 3. Use **2D Goal Pose** to trigger the experiment.
 
 The position and orientation of the 2D Goal Pose are ignored; the trajectory configured in `qcar2_flmpc.yaml` is used.
+
+### 6.7 Stop the project
+
+To stop the project, press **Ctrl + C** in the terminal tab where `qcar2_flmpc_bringup_launch.py` is running.
 
 ---
 
@@ -517,6 +547,8 @@ colcon build
 source install/setup.bash
 ```
 
+> **Note:** If `colcon build` reports an error on the first attempt, run `colcon build` once again.
+
 ### 7.3 Launch OAMPC
 
 ```bash
@@ -566,6 +598,10 @@ The active path is not required for the basic RViz2 setup.
 
 As with Mk2, the 2D Goal Pose is only a trigger. Its position and orientation do not define the trajectory.
 
+### 7.6 Stop the project
+
+To stop the project, press **Ctrl + C** in the terminal tab where `qcar2_oampc_bringup_launch.py` is running.
+
 ---
 
 ## 8. When to regenerate the acados solver
@@ -610,3 +646,5 @@ After regenerating the solver, return to the workspace root and run:
 colcon build
 source install/setup.bash
 ```
+
+> **Note:** If `colcon build` reports an error on the first attempt, run `colcon build` once again.
