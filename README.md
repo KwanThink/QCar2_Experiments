@@ -9,6 +9,7 @@ The guide focuses on the practical steps required to build, launch, visualize, a
 | Project | Main purpose |
 |---|---|
 | `ros2` | Manual driving and SLAM-based map creation |
+| `Maps` | Occupancy maps (`.yaml` + `.pgm`) used by the localization and controller projects |
 | `ros2_qcar2_nmpc_Mk1` | NMPC trajectory tracking toward a goal selected in RViz2 |
 | `ros2_qcar2_nmpc_Mk2` | NMPC tracking of a predefined reference trajectory |
 | `ros2_qcar2_flmpc_Mk1` | FLMPC trajectory tracking toward a goal selected in RViz2 |
@@ -22,6 +23,8 @@ The main difference between Mk1 and Mk2 is how `2D Goal Pose` in RViz2 is used:
 - **OAMPC Mk1c:** like Mk2, 2D Goal Pose is only a trigger for the predefined trajectory.
 
 For NMPC and FLMPC, an acados solver must be generated before building the ROS2 workspace.
+
+The provided `Maps` folder should be placed at `/home/nvidia/Maps`.
 
 ---
 
@@ -141,6 +144,8 @@ cd ~/ros2_qcar2_nmpc_Mk1
 
 ### 3.3 Build and source
 
+Before building, make sure the project is configured to use the correct map from `/home/nvidia/Maps` for the current environment.
+
 ```bash
 colcon build
 source install/setup.bash
@@ -235,6 +240,8 @@ cd ~/ros2_qcar2_nmpc_Mk2
 
 ### 4.3 Build and source
 
+Before building, make sure the project is configured to use the correct map from `/home/nvidia/Maps` for the current environment.
+
 ```bash
 colcon build
 source install/setup.bash
@@ -324,6 +331,8 @@ cd ~/ros2_qcar2_flmpc_Mk1
 
 ### 5.3 Build and source
 
+Before building, make sure the project is configured to use the correct map from `/home/nvidia/Maps` for the current environment.
+
 ```bash
 colcon build
 source install/setup.bash
@@ -409,6 +418,8 @@ cd ~/ros2_qcar2_flmpc_Mk2
 ```
 
 ### 6.3 Build and source
+
+Before building, make sure the project is configured to use the correct map from `/home/nvidia/Maps` for the current environment.
 
 ```bash
 colcon build
@@ -497,6 +508,8 @@ The main obstacle-activation parameters are:
 Parameters such as `big_M`, `gamma`, `slack_weight`, `gurobi_time_limit`, `Q`, and `R` are controller-tuning parameters and normally do not need to be changed just to run the project.
 
 ### 7.2 Build and source
+
+Before building, make sure the project is configured to use the correct map from `/home/nvidia/Maps` for the current environment.
 
 ```bash
 cd ~/ros2_qcar2_oampc_Mk1c
